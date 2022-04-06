@@ -30,9 +30,7 @@ stopwords = []
 
 def process(path):
     # import data
-    with open(path) as f:
-        text = f.read()
-
+    text = pathlib.Path(path).read_text()
     # process entire string
     string_processed = preprocessing.preprocess_string(text, custom_filters)
 
@@ -61,7 +59,7 @@ def load_data_vectors(path):
         gen = (delayed(filter_single)(i, counts) for i, d, n in data)
         data = p(gen)
 
-    return {k: v for k, v in zip(names, data)}
+    return dict(zip(names, data))
 
 
 if __name__ == "__main__":
